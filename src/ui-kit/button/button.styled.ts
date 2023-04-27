@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Button = styled.button`
@@ -17,7 +18,35 @@ export const Button = styled.button`
     color: #1677ff;
   }
 `
+export const ButtonBlue = styled(Button)`
+  background-color: #1677ff;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #1677ff;
+  transition: all 0.2s ease;
+  &:hover {
+    background-color: transparent;
+    color: #1677ff;
+  }
+`
+export const ButtonLink = styled(Link)`
+  font-size: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
 
+  background-color: #1677ff;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #1677ff;
+  transition: all 0.2s ease;
+  &:hover {
+    background-color: transparent;
+    color: #1677ff;
+  }
+`
 export const ButtonFavorites = styled(Button)`
   padding-right: 25px;
   position: relative;
@@ -44,13 +73,13 @@ export const ButtonPopup = styled.div`
   color: #040404;
   font-size: 12px;
   position: absolute;
- 
-  width:max-content;
+
+  width: max-content;
   top: -50px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: all .3s ease ;
+  transition: all 0.3s ease;
   visibility: hidden;
   pointer-events: none;
 `
@@ -66,7 +95,30 @@ export const ButtonIcon = styled(Button)`
     ${ButtonPopup} {
       opacity: 1;
       top: -40px;
-      transition: all .3s ease .6s;
+      transition: all 0.3s ease 0.6s;
+      visibility: visible;
+    }
+  }
+`
+
+export const ButtonIconLink = styled(Link)`
+  position: relative;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 3px;
+  line-height: 99%;
+  cursor: pointer;
+  color: #fff;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  &:hover {
+    background-color: #fff;
+    color: #1677ff;
+    ${ButtonPopup} {
+      opacity: 1;
+      top: -40px;
+      transition: all 0.3s ease 0.6s;
       visibility: visible;
     }
   }

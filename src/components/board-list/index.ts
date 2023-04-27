@@ -1,1 +1,1 @@
-export { BoardList } from "./board-list";
+export { BoardGrid } from './board-list.styled'

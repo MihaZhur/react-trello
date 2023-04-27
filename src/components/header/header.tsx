@@ -1,14 +1,15 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import * as S from './header.styled';
-import { Input } from 'antd';
-const { Search } = Input;
+import React from 'react'
+
+import { Buttons } from '~/ui-kit'
+
+import { validParamsLocationModal } from '~/utils/valid-params-location-modal'
+
+import * as S from './header.styled'
 
 export const Header: React.FC = () => {
   return (
     <S.Header>
-      <NavLink to='board/create' className='ant-btn css-dev-only-do-not-override-mxhywb ant-btn-primary'> Добавить доску </NavLink>
-      <Search style={{width: 300}} placeholder="Поиск"  enterButton="Найти" />
+      <Buttons.ButtonLink to={validParamsLocationModal() + 'board=create'}> Добавить доску </Buttons.ButtonLink>
     </S.Header>
-  );
+  )
 }

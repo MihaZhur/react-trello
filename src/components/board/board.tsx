@@ -1,41 +1,40 @@
 import React from 'react'
 
+import { AiOutlineDelete, AiOutlineEdit, AiOutlinePushpin, AiTwotonePushpin } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-import {  PushpinFilled, PushpinOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+
+import { Buttons } from '~/ui-kit'
+
+import { validParamsLocationModal } from '~/utils/valid-params-location-modal'
+
+import { Board as IBoard } from '~/models'
+
 import * as S from './board.styled'
-import * as UI from '~/ui-kit'
 
-export const Board: React.FC = () => {
-  const isActive = false
-
+export const Board: React.FC<IBoard> = (board) => {
   return (
     <S.BoardCard data-aos='fade-up' data-aos-duration='500'>
       <S.BoardInfo>
-        <S.BoardTitle>Название доски</S.BoardTitle>
+        <S.BoardTitle>{board.title}</S.BoardTitle>
         <S.BoardBottom>
-          <Link to='#'>
-            <UI.Buttons.Button>Перейти к доске</UI.Buttons.Button>
+          <Link to={'board/' + board.id}>
+            <Buttons.Button>Перейти к доске</Buttons.Button>
           </Link>
-          {/* <UI.Buttons.ButtonFavorites>Избранное</UI.Buttons.ButtonFavorites> */}
           <S.BoardSettings>
-            <UI.Buttons.ButtonIcon>
-              <UI.Buttons.ButtonPopup>
-                {!isActive ? 'Добавить в избранное' : 'Убрать из избранного'}
-              </UI.Buttons.ButtonPopup>
-              {isActive ? <PushpinFilled /> :  <PushpinOutlined />}
-            </UI.Buttons.ButtonIcon>
-            <UI.Buttons.ButtonIcon>
-            <UI.Buttons.ButtonPopup>
-                Редактировать доску
-              </UI.Buttons.ButtonPopup>
-              <EditOutlined />
-            </UI.Buttons.ButtonIcon>
-            <UI.Buttons.ButtonIcon>
-            <UI.Buttons.ButtonPopup>
-                Удалить доску
-              </UI.Buttons.ButtonPopup>
-              <DeleteOutlined />
-            </UI.Buttons.ButtonIcon>
+            <Buttons.ButtonIcon>
+              <Buttons.ButtonPopup>
+                {board.favorite ? 'Убрать из избранного' : 'Добавить в избранное'}
+              </Buttons.ButtonPopup>
+              {board.favorite ? <AiTwotonePushpin /> : <AiOutlinePushpin />}
+            </Buttons.ButtonIcon>
+            <Buttons.ButtonIconLink to={validParamsLocationModal() + `borad=edit&boardId=${board.id}`}>
+              <Buttons.ButtonPopup>Редактировать доску</Buttons.ButtonPopup>
+              <AiOutlineEdit />
+            </Buttons.ButtonIconLink>
+            <Buttons.ButtonIcon>
+              <Buttons.ButtonPopup>Удалить доску</Buttons.ButtonPopup>
+              <AiOutlineDelete />
+            </Buttons.ButtonIcon>
           </S.BoardSettings>
         </S.BoardBottom>
       </S.BoardInfo>

@@ -1,2 +1,3 @@
-export { ModalLayout } from "./layouts";
-export { MainLayout } from "./layouts";
+export { Board } from './board'
+export { BoardGrid } from './board-list'
+export { MainLayout } from './layouts'

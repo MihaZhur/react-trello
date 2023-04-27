@@ -1,3 +1,1 @@
-export { Board } from "./board";
-export { Home } from "./home";
-
+export { Home } from './home'

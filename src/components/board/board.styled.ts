@@ -23,7 +23,6 @@ export const BoardInfo = styled.div`
   height: 100%;
   z-index: 2;
   box-shadow: 0px 10px 20px 1px rgba(0, 0, 0, 0.3);
-
 `
 export const BoardTitle = styled.h3`
   color: #fff;

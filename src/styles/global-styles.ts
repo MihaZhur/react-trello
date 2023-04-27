@@ -43,8 +43,6 @@ h3,
 h4 {
   margin: 0;
 }
-.board-list {
-  padding-bottom: 30px;
-}
+
 
 `

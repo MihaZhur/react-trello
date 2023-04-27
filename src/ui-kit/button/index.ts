@@ -1,2 +1,1 @@
-export * as Buttons from "./button.styled";
-
+export * as Buttons from './button.styled'

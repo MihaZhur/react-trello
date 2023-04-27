@@ -53,7 +53,7 @@ export const ModalContainer = styled.div<Prop>`
   display: ${(props) => (props.isActive ? 'block' : 'none')};
   z-index: 100;
   animation-name: ${(props) => (props.isAnimate ? AnimationOpenPopup : AnimationClosePopup)};
-  animation-duration: ${(props) => props.time  + 'ms' };
+  animation-duration: ${(props) => props.time + 'ms'};
   animation-fill-mode: forwards;
 `
 
@@ -74,6 +74,6 @@ export const ModalContent = styled.div<Prop>`
   cursor: auto;
   display: ${(props) => (props.isActive ? 'block' : 'none')};
   animation-name: ${(props) => (props.isAnimate ? AnimationOpenContent : AnimationCloseContent)};
-  animation-duration: ${(props) => props.time + 'ms' };
+  animation-duration: ${(props) => props.time + 'ms'};
   animation-fill-mode: forwards;
 `

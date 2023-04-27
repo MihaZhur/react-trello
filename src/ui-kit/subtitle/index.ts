@@ -1,2 +1,1 @@
-export { SubTitle } from "./subtitle.styled";
-
+export { SubTitle } from './subtitle.styled'
