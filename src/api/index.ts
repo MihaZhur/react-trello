@@ -1,1 +1,1 @@
-export * as BoardApi from './board-api'
+export { BoardApi } from './board-api'

@@ -3,15 +3,17 @@ import { boardsArray } from '~/utils/board-mock'
 import { Board } from '~/models'
 
 interface RequestBoard {
-  countPages: number
+  total: number
   favoritesBoards: Board[]
   boards: Board[]
+  currentPage: number
+  countPages: number
 }
 
-class BoardApi {
+export class BoardApi {
   private KEY_BOARD = 'board'
 
-  private getItemsStorage() {
+  private getItemsStorage(): Board[] | null {
     return JSON.parse(localStorage.getItem(this.KEY_BOARD)!)
   }
 
@@ -19,19 +21,26 @@ class BoardApi {
     localStorage.setItem(this.KEY_BOARD, JSON.stringify(array))
   }
 
-  private boards: Board[] = this.getItemsStorage() ?? boardsArray
+  private get boards(): Board[] | [] {
+    if (this.getItemsStorage() !== null && Array.isArray(this.getItemsStorage())) {
+      return this.getItemsStorage()!
+    }
+    return boardsArray
+  }
 
   public getBoards(currentPage = 1): Promise<RequestBoard> {
     return new Promise((resolve) => {
       const limit = 8
 
-      const countPages = Math.ceil(this.boards.length / limit)
+      const total = this.boards?.length
+
+      const countPages = Math.ceil(total / limit)
 
       const favoritesBoards = this.boards.filter((board) => board.favorite)
 
       const currentBoardsPage = this.boards.slice((currentPage - 1) * limit, currentPage * limit)
 
-      setTimeout(() => resolve({ countPages, favoritesBoards, boards: currentBoardsPage }), 1000)
+      setTimeout(() => resolve({ total, favoritesBoards, boards: currentBoardsPage, currentPage, countPages }), 3000)
     })
   }
 
@@ -44,5 +53,3 @@ class BoardApi {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public deleteBoard() {}
 }
-
-export default new BoardApi()

@@ -101,4 +101,4 @@ export const boardsArray = [
     favorite: false,
     columns: ['14', '15', '16'],
   },
-]
+].reverse()

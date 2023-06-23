@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const BoardCard = styled.div`
   height: 100%;
+  margin-bottom: 20px;
 `
 export const BoardBottom = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ export const BoardSettings = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 4px;
-  max-width: 90px;
+  max-width: 106px;
   width: 100%;
   display: flex;
   justify-content: space-between;

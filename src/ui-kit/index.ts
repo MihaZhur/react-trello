@@ -1,6 +1,0 @@
-export { Buttons } from './button'
-export { Container } from './container'
-export { Modal } from './modal'
-export { SubTitle } from './subtitle'
-export { Title } from './title'
-export { Wrapper } from './wrapper'

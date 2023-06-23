@@ -1,40 +1,44 @@
 import React from 'react'
 
-import { AiOutlineDelete, AiOutlineEdit, AiOutlinePushpin, AiTwotonePushpin } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Button } from 'antd'
+import { useSearchParams } from 'react-router-dom'
 
-import { Buttons } from '~/ui-kit'
+import { Board as IBoard } from '~/models/board'
 
-import { validParamsLocationModal } from '~/utils/valid-params-location-modal'
-
-import { Board as IBoard } from '~/models'
+import { DeleteOutlined, EditOutlined, PushpinOutlined } from '@ant-design/icons'
 
 import * as S from './board.styled'
+// <DeleteFilled />
+//<EditFilled />
+interface BoardSettings {
+  edit?: () => void
+  SetURLSearchParams?: ReturnType<typeof useSearchParams>[1]
+  URLSearchParams?: ReturnType<typeof useSearchParams>[0]
+  board: IBoard
+}
 
-export const Board: React.FC<IBoard> = (board) => {
+export const Board: React.FC<BoardSettings> = ({ edit, SetURLSearchParams, URLSearchParams, board }) => {
+  const editBoard = (id: string) => {
+    URLSearchParams?.set('boardId', id)
+    SetURLSearchParams && SetURLSearchParams(URLSearchParams)
+    edit && edit()
+  }
   return (
-    <S.BoardCard data-aos='fade-up' data-aos-duration='500'>
+    <S.BoardCard>
       <S.BoardInfo>
         <S.BoardTitle>{board.title}</S.BoardTitle>
         <S.BoardBottom>
-          <Link to={'board/' + board.id}>
-            <Buttons.Button>Перейти к доске</Buttons.Button>
-          </Link>
+          <Button>Перейти к доске</Button>
           <S.BoardSettings>
-            <Buttons.ButtonIcon>
-              <Buttons.ButtonPopup>
-                {board.favorite ? 'Убрать из избранного' : 'Добавить в избранное'}
-              </Buttons.ButtonPopup>
-              {board.favorite ? <AiTwotonePushpin /> : <AiOutlinePushpin />}
-            </Buttons.ButtonIcon>
-            <Buttons.ButtonIconLink to={validParamsLocationModal() + `borad=edit&boardId=${board.id}`}>
-              <Buttons.ButtonPopup>Редактировать доску</Buttons.ButtonPopup>
-              <AiOutlineEdit />
-            </Buttons.ButtonIconLink>
-            <Buttons.ButtonIcon>
-              <Buttons.ButtonPopup>Удалить доску</Buttons.ButtonPopup>
-              <AiOutlineDelete />
-            </Buttons.ButtonIcon>
+            <Button size='small'>
+              <PushpinOutlined size={12} />
+            </Button>
+            <Button size='small' onClick={() => editBoard(board.id)}>
+              <EditOutlined size={12} />
+            </Button>
+            <Button size='small'>
+              <DeleteOutlined size={12} />
+            </Button>
           </S.BoardSettings>
         </S.BoardBottom>
       </S.BoardInfo>
