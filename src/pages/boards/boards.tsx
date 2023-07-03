@@ -4,12 +4,16 @@ import { Button, Col, Input, Pagination, Row, Spin, Typography } from 'antd'
 import { useSearchParams } from 'react-router-dom'
 
 import { Board } from '~/components'
+import { Error } from '~/components/error'
 import { ModalBoard } from '~/components/modal'
 
 import { useGetBoards } from '~/hooks/board/use-get-boards'
 
+import { isShowPagination } from '~/utils/is-show-pagination'
+
 const { Search } = Input
 const { Title } = Typography
+
 export const BoardsPage: React.FC = () => {
   const [boardParams, setBoardParams] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,11 +21,7 @@ export const BoardsPage: React.FC = () => {
 
   const LIMITE_BOARD = 8
 
-  const isShowPagination = (limit: number, total: number) => {
-    return total > limit ? true : false
-  }
-
-  const { isLoading, data } = useGetBoards(searchParams)
+  const { isLoading, data, isSuccess, isError } = useGetBoards(searchParams)
 
   const setSerchParamsModal = (boradParams: string) => {
     return () => {
@@ -55,6 +55,7 @@ export const BoardsPage: React.FC = () => {
     }
     if (!searchParams.get('modal')) handleCancel()
   }, [])
+
   if (isLoading) {
     return (
       <Row justify={'center'} align={'middle'} style={{ height: '100%' }}>
@@ -64,58 +65,51 @@ export const BoardsPage: React.FC = () => {
       </Row>
     )
   }
-  if (!isLoading) {
-    if (data!.countPages < data!.currentPage) {
-      return (
-        <Col span={10}>
-          <Title>Ошибка 404</Title>
-        </Col>
-      )
-    }
-
-    return (
-      <>
-        <Row justify={'space-between'}>
-          <Col span={10}>
-            <Title>Все доски</Title>
-          </Col>
-          <Col span={10}>
-            <Search placeholder='input search text' allowClear enterButton='Search' size='large' />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={10}>
-            <Button onClick={showModalCreate} type='primary'>
-              Создать доску
-            </Button>
-          </Col>
-        </Row>
-        <Row gutter={[16, 16]} style={{ paddingTop: '80px' }}>
-          {data &&
-            data.boards.map((item) => {
-              return (
-                <Col span={6} key={item.id}>
-                  <Board
-                    board={item}
-                    SetURLSearchParams={setSearchParams}
-                    URLSearchParams={searchParams}
-                    edit={showModalEdit}
-                  />
-                </Col>
-              )
-            })}
-        </Row>
-        {isShowPagination(LIMITE_BOARD, data!.total) && (
-          <Pagination
-            style={{ marginTop: '80px' }}
-            pageSize={LIMITE_BOARD}
-            total={data?.total}
-            defaultCurrent={data?.currentPage}
-            onChange={changePage}
-          />
-        )}
-        <ModalBoard boardParams={boardParams} isOpened={isModalOpen} onCancel={handleCancel} />
-      </>
-    )
+  if (isError) {
+    return <Error />
   }
+  return (
+    <>
+      <Row justify={'start'}>
+        <Col span={10}>
+          <Title>Все доски</Title>
+        </Col>
+      </Row>
+      <Row justify={'space-between'}>
+        <Col span={10}>
+          <Button onClick={showModalCreate} type='primary'>
+            Создать доску
+          </Button>
+        </Col>
+        <Col span={10}>
+          <Search placeholder='input search text' allowClear enterButton='Search' size='large' />
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]} style={{ paddingTop: '80px' }}>
+        {isSuccess &&
+          data.boards.map((item) => {
+            return (
+              <Col span={6} key={item.id}>
+                <Board
+                  board={item}
+                  SetURLSearchParams={setSearchParams}
+                  URLSearchParams={searchParams}
+                  edit={showModalEdit}
+                />
+              </Col>
+            )
+          })}
+      </Row>
+      {isShowPagination(LIMITE_BOARD, data!.total) && (
+        <Pagination
+          style={{ marginTop: '80px' }}
+          pageSize={LIMITE_BOARD}
+          total={data?.total}
+          defaultCurrent={data?.currentPage}
+          onChange={changePage}
+        />
+      )}
+      <ModalBoard boardParams={boardParams} isOpened={isModalOpen} onCancel={handleCancel} />
+    </>
+  )
 }

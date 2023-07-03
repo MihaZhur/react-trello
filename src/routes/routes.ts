@@ -3,7 +3,7 @@ import { DashboardOutlined, HomeOutlined } from '@ant-design/icons'
 export const routes = {
   home: {
     url: '/',
-    title: 'Home page',
+    title: 'Главная страница',
     icon: HomeOutlined,
   },
   boards: {

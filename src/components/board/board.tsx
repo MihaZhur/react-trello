@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { Button } from 'antd'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+
+import { useDeleteBoard } from '~/hooks/board/use-delete-board'
 
 import { Board as IBoard } from '~/models/board'
 
@@ -18,6 +20,8 @@ interface BoardSettings {
 }
 
 export const Board: React.FC<BoardSettings> = ({ edit, SetURLSearchParams, URLSearchParams, board }) => {
+  const navigate = useNavigate()
+  const { mutate: deleteBoard } = useDeleteBoard()
   const editBoard = (id: string) => {
     URLSearchParams?.set('boardId', id)
     SetURLSearchParams && SetURLSearchParams(URLSearchParams)
@@ -28,7 +32,7 @@ export const Board: React.FC<BoardSettings> = ({ edit, SetURLSearchParams, URLSe
       <S.BoardInfo>
         <S.BoardTitle>{board.title}</S.BoardTitle>
         <S.BoardBottom>
-          <Button>Перейти к доске</Button>
+          <Button onClick={() => navigate('/boards/' + board.id)}>Перейти к доске</Button>
           <S.BoardSettings>
             <Button size='small'>
               <PushpinOutlined size={12} />
@@ -36,7 +40,7 @@ export const Board: React.FC<BoardSettings> = ({ edit, SetURLSearchParams, URLSe
             <Button size='small' onClick={() => editBoard(board.id)}>
               <EditOutlined size={12} />
             </Button>
-            <Button size='small'>
+            <Button size='small' onClick={() => deleteBoard(board.id)}>
               <DeleteOutlined size={12} />
             </Button>
           </S.BoardSettings>

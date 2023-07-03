@@ -3,13 +3,17 @@ import React from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
 
 import { MainLayout } from '../components'
-import { BoardsPage, Home } from '../pages'
+import { BoardPage, BoardsPage, Home } from '../pages'
 
 import { routes } from './routes'
 
 const home: RouteObject = {
   index: true,
   element: <Home />,
+}
+const board: RouteObject = {
+  path: routes.boards.url + '/:id',
+  element: <BoardPage />,
 }
 const boards: RouteObject = {
   path: routes.boards.url,
@@ -20,7 +24,7 @@ const router: RouteObject[] = [
   {
     path: routes.home.url,
     element: <MainLayout />,
-    children: [home, boards],
+    children: [home, boards, board],
   },
 ]
 
